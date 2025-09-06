@@ -37,6 +37,23 @@ public class InicioPAM {
      // Método para mostrar porcentajes por parcial
     public void mostrarPorcentajesporParcial() {
         System.out.println("=== PORCENTAJES POR PARCIAL ===");
+        System.out.println("1er Parcial:");
+        System.out.println("Conocimento: 40%");
+        System.out.println("Desempeño: 20%");
+        System.out.println("Producto: 30%");
+        System.out.println("PI: 10%");
+        
+        System.out.println("2do Parcial:");
+        System.out.println("Conocimento: 40%");
+        System.out.println("Desempeño: 20%");
+        System.out.println("Producto: 20%");
+        System.out.println("PI: 20%");
+        
+        System.out.println("3er Parcial:");
+        System.out.println("Conocimento: 20%");
+        System.out.println("Desempeño: 10%");
+        System.out.println("Producto: 40%");
+        System.out.println("PI: 30%");
     }
     
 }
