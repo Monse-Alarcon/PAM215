@@ -24,6 +24,22 @@ public class InterfazMateria extends JFrame {
         JButton btnLineamientos = new JButton("Lineamientos Classroom");
         JButton btnFechas = new JButton("Fechas de Parciales");
         JButton btnPorcentajes = new JButton("Porcentajes");
+        
+        btnReglamento.addActionListener(e -> {
+            materia.mostrarReglamentoPOO();
+        });
+
+        btnLineamientos.addActionListener(e -> {
+            materia.mostrarLineamientosClassroom();
+        });
+
+        btnFechas.addActionListener(e -> {
+            materia.mostrarFechasdeParciales();
+        });
+
+        btnPorcentajes.addActionListener(e -> {
+            materia.mostrarPorcentajesporParcial();
+        });
     }
    
     public static void main(String[] args) {
