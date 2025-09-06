@@ -16,4 +16,9 @@ public class InicioPAM {
         System.out.println("=== FECHAS DE PARCIALES ===");
     }
     
+     // Método para mostrar porcentajes por parcial
+    public void mostrarPorcentajesporParcial() {
+        System.out.println("=== PORCENTAJES POR PARCIAL ===");
+    }
+    
 }
