@@ -40,6 +40,10 @@ public class InterfazMateria extends JFrame {
         btnPorcentajes.addActionListener(e -> {
             materia.mostrarPorcentajesporParcial();
         });
+        
+        //Organización
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
     }
    
     public static void main(String[] args) {
