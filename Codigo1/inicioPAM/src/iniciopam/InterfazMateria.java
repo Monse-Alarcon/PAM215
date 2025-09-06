@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package iniciopam;
 
-/**
- *
- * @author Monsee
- */
-public class InterfazMateria {
+package iniciopam;
+import javax.swing.*;
+
+public class InterfazMateria extends JFrame {
     
+    public InterfazMateria() {
+    }
 }
