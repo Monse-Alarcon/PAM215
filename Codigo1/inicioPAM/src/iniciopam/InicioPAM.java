@@ -11,4 +11,9 @@ public class InicioPAM {
         System.out.println("=== LINEAMIENTOS CLASSROOM ===");
     }
     
+      // Método para mostrar fechas de parciales
+    public void mostrarFechasdeParciales() {
+        System.out.println("=== FECHAS DE PARCIALES ===");
+    }
+    
 }
