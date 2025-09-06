@@ -49,6 +49,8 @@ public class InterfazMateria extends JFrame {
         panelBotones.add(btnLineamientos);
         panelBotones.add(btnFechas);
         panelBotones.add(btnPorcentajes);
+        
+        add(panelBotones);
     }
    
     public static void main(String[] args) {
