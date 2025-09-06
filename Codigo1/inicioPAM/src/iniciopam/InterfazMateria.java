@@ -19,4 +19,9 @@ public class InterfazMateria extends JFrame {
         // 4. Centrar la ventana en la pantalla  
         setLocationRelativeTo(null);
     }
+   
+    public static void main(String[] args) {
+        InterfazMateria ventana = new InterfazMateria();
+        ventana.setVisible(true);
+    }
 }
