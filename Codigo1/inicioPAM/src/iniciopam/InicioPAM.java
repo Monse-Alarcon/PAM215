@@ -4,6 +4,17 @@ public class InicioPAM {
     // Método para mostrar el reglamento POO
     public void mostrarReglamentoPOO() {
         System.out.println("=== REGLAMENTO POO ===");
+        System.out.println("1.Se requiere 80% de asistencia para evaluar");
+        System.out.println("2.Se permiten 10 minutos de tolerancia");
+        System.out.println("3. Las faltas deberán estar justificadas");
+        System.out.println("4. Las tareas y trabajos deberán subirlas al Classroom");
+        System.out.println("5. Las tareas y trabajos presentarlos en tiempo y forma");
+        System.out.println("6. Utilizar el correo institucional");
+        System.out.println("7. NO plagio o copia de trabajos");
+        System.out.println("8. Cualquier deshonestidad académica será reprobación");
+        System.out.println("9. Disciplina en todo momento");
+        System.out.println("10. Uso de laptops solo cuando sea necesario");
+        
     }
     
     // Método para mostrar lineamientos de Classroom
