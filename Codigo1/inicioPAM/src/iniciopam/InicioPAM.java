@@ -18,7 +18,11 @@ public class InicioPAM {
     
     // Método para mostrar lineamientos de Classroom
     public void mostrarLineamientosClassroom() {
-        System.out.println("=== LINEAMIENTOS CLASSROOM ===");
+        System.out.println("=== LINEAMIENTOS DE EVALUACIÓN ===");
+        System.out.println("1. Evidencia de conocimiento");
+        System.out.println("2. Evidencia de desempeño");
+        System.out.println("3. Evidencia de producto");
+        System.out.println("4. Proyecto integrador");
     }
     
       // Método para mostrar fechas de parciales
