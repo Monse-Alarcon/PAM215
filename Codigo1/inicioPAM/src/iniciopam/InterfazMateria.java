@@ -18,6 +18,12 @@ public class InterfazMateria extends JFrame {
 
         // 4. Centrar la ventana en la pantalla  
         setLocationRelativeTo(null);
+        
+        // Botones
+        JButton btnReglamento = new JButton("Reglamento POO");
+        JButton btnLineamientos = new JButton("Lineamientos Classroom");
+        JButton btnFechas = new JButton("Fechas de Parciales");
+        JButton btnPorcentajes = new JButton("Porcentajes");
     }
    
     public static void main(String[] args) {
