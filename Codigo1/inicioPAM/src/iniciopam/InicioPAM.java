@@ -14,7 +14,6 @@ public class InicioPAM {
         System.out.println("8. Cualquier deshonestidad académica será reprobación");
         System.out.println("9. Disciplina en todo momento");
         System.out.println("10. Uso de laptops solo cuando sea necesario");
-        
     }
     
     // Método para mostrar lineamientos de Classroom
@@ -25,6 +24,10 @@ public class InicioPAM {
       // Método para mostrar fechas de parciales
     public void mostrarFechasdeParciales() {
         System.out.println("=== FECHAS DE PARCIALES ===");
+        System.out.println("1er Parcial: 29-09-25");
+        System.out.println("2do Parcial: 03-11-25");
+        System.out.println("3er Parcial: 01-12-25");
+        System.out.println("Final: 08-12-25");
     }
     
      // Método para mostrar porcentajes por parcial
