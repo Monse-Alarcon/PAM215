@@ -6,4 +6,9 @@ public class InicioPAM {
         System.out.println("=== REGLAMENTO POO ===");
     }
     
+    // Método para mostrar lineamientos de Classroom
+    public void mostrarLineamientosClassroom() {
+        System.out.println("=== LINEAMIENTOS CLASSROOM ===");
+    }
+    
 }
