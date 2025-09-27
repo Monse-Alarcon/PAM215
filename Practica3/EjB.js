@@ -12,7 +12,7 @@ function verfificarUsuario(usuario) {
         .then(res => console.log(res))
         .catch(err => console.error(err));
 
-    verfificarUsuario("Ivan")
+    verfificarUsuario("Monse")
         .then(res => console.log(res))
         .catch(err => console.error(err));
     
