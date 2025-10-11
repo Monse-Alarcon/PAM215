@@ -1,6 +1,8 @@
+// 1.imports: Zona de importaciones
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+// 2. main: Zona de componentes
 export default function App() {
   return (
     <View style={styles.container}>
@@ -10,6 +12,7 @@ export default function App() {
   );
 }
 
+// 3. Estilos: Zona de estilos y posicionamiento
 const styles = StyleSheet.create({
   container: {
     flex: 1,
