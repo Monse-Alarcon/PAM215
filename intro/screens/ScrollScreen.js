@@ -1,9 +1,9 @@
 import { Text, StyleSheet, View } from "react-native"
 
-export default function BotonesScreen() {
+export default function ScrollScreen() {
     return (
         <View style={styles.container}>
-            <Text> Proximamente por Daniel Jr</Text>
+            <Text> Proximamente equipos </Text>
         </View>
     )
 }

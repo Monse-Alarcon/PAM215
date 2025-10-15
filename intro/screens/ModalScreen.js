@@ -1,9 +1,9 @@
 import { Text, StyleSheet, View } from "react-native"
 
-export default function BotonesScreen() {
+export default function ModalScreen() {
     return (
         <View style={styles.container}>
-            <Text> Proximamente por Daniel Jr</Text>
+            <Text> Proximamente equiposssss </Text>
         </View>
     )
 }
