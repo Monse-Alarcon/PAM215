@@ -9,6 +9,7 @@ import ActScreen from "./ActScreen";
 import FlatScreen from "./FlatScreen";
 import ModalScreen from "./ModalScreen";
 import ButtonScreen from "./BottonScreen";
+import RepasoScreen from "./RepasoScreen";
 import { Button } from "react-native-web";
 
 export default function MenuScreen() {
@@ -33,6 +34,8 @@ export default function MenuScreen() {
             return <ModalScreen/>;
         case 'button':
             return <ButtonScreen/>;
+        case 'Repaso1':
+            return <RepasoScreen/>;
         case 'menu':
             default:
                 return (
@@ -49,6 +52,7 @@ export default function MenuScreen() {
                         <Button color="#2c68bdff" onPress={()=>setScreen('flat')} title="Prac: FlatList" />
                         <Button color="#185ab8ff" onPress={()=>setScreen('modal')} title="Prac: Modal" />
                         <Button color="#034fbaff" onPress={()=>setScreen('button')} title="Prac: Bottom" />
+                        <Button color="#012c72ff" onPress={()=>setScreen('Repaso1')} title="Prac: Repaso1" />
                         </View>
                     </View>
                 )       
