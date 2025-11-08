@@ -1,10 +1,15 @@
 import React, {useEffect, useState} from "react"
-import { StyleSheet, Text, View, ImageBackground, Animated, Easing, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Animated, Easing, ScrollView, Button, Switch } from 'react-native'
 
 export default function App() {
  //constantes de splash
   const [cargando, setCargando] = useState(true);
   const desvanecido = new Animated.Value(1);
+  //El switch
+  const [esEncendido1, cambiarEncendido1] = useState(false);
+  const [esEncendido2, cambiarEncendido2] = useState(false);
+  const [esEncendido3, cambiarEncendido3] = useState(false);
+  const [color, cambiarColor] = useState('#a9b8c5ff');
 
   useEffect (() => {
         const timer = setTimeout(() => {
@@ -36,7 +41,7 @@ export default function App() {
         );
     }
 
-  
+
 
   return (
 
@@ -55,11 +60,26 @@ export default function App() {
       <ScrollView>
         <View style={styles.containerDentro}>
           <Text style={styles.texto2}> 1. Realizar examen de React Native</Text>
+          <Text>        </Text>
           <Text style={styles.textoDentro}> Tareas: </Text>
-          <Text> -Estudiar
-              Descripció: 
-             </Text>
-          <Text> -Hacer prácticas de lo visto en clase </Text>
+          <Text> - Estudiar</Text>
+          <Text>    Descripción: Revisar los apuntes de clase</Text>
+          <Text>    Prioridad: Media </Text>
+          <Text>        </Text>
+          <Text> - Hacer prácticas de lo visto en clase </Text>
+          <Text>    Descripción: Con ayuda de las prácticas hacer un respaso de todas </Text>
+          <Text>    Prioridad: Alta </Text>
+          <Text>    Estado: </Text>
+          <text style={{color: esEncendido1 ? color: 'black'}}> 
+                {esEncendido1 ? "Completado" : "Pendiente"}
+
+            </text>
+          <Switch
+                value={esEncendido1}
+                onValueChange = { () => cambiarEncendido1 (!esEncendido1)}
+                trackColor={{true: '#f9f638ff', false: '#174166ff'}}
+            ></Switch>
+             
         </View>
 
         <View style={styles.containerDentro2}>
@@ -67,6 +87,16 @@ export default function App() {
           <Text style={styles.textoDentro}> Tareas: </Text>
           <Text> -Estudiar </Text>
           <Text> -Hacer prácticas de lo visto en clase </Text>
+          <Text>    Estado: </Text>
+          <text style={{color: esEncendido2 ? color: 'black'}}> 
+                {esEncendido2 ? "Completado" : "Pendiente"}
+
+            </text>
+          <Switch
+                value={esEncendido2}
+                onValueChange = { () => cambiarEncendido2 (!esEncendido2)}
+                trackColor={{true: '#f9f638ff', false: '#174166ff'}}
+            ></Switch>
         </View>
 
         <View style={styles.containerDentro3}>
@@ -74,11 +104,31 @@ export default function App() {
           <Text style={styles.textoDentro}> Tareas: </Text>
           <Text> -Estudiar </Text>
           <Text> -Hacer prácticas de lo visto en clase </Text>
+          <Text>    Estado: </Text>
+          <text style={{color: esEncendido3 ? color: 'black'}}> 
+                {esEncendido3 ? "Completado" : "Pendiente"}
+
+            </text>
+          <Switch
+                value={esEncendido3}
+                onValueChange = { () => cambiarEncendido3 (!esEncendido3)}
+                trackColor={{true: '#f9f638ff', false: '#174166ff'}}
+            ></Switch>
         </View>
 
 
 
       </ScrollView>
+
+      <Button
+          title='Reiniciar Estado de Tareas'
+          color='#ba157bff'
+          onPress={ () => {
+            cambiarEncendido1 (false);
+            cambiarEncendido2 (false);
+            cambiarEncendido3 (false);
+          }}
+      ></Button>
 
     </View>
 
@@ -141,9 +191,9 @@ const styles = StyleSheet.create({
       // estilos de pantalla principal
     containerDentro: {
         backgroundColor: '# rgba(158, 207, 150, 0.53)', //color de fondo
-        height: 220,
+        height: 300,
         width: '90%',
-        alignItems: 'center',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
+        alignItems: 'start',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
         justifyContent: 'center', //Eje y
         borderRadius:5,
         marginBottom:8, //espacio entre cajas
@@ -152,9 +202,9 @@ const styles = StyleSheet.create({
 
     containerDentro2: {
         backgroundColor: '# rgba(58, 68, 148, 0.53)', //color de fondo
-        height: 220,
+        height: 300,
         width: '90%',
-        alignItems: 'center',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
+        alignItems: 'start',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
         justifyContent: 'center', //Eje y
         borderRadius:5,
         marginBottom:8, //espacio entre cajas
@@ -163,9 +213,9 @@ const styles = StyleSheet.create({
 
     containerDentro3: {
         backgroundColor: '# rgba(107, 58, 148, 0.53)', //color de fondo
-        height: 220,
+        height: 300,
         width: '90%',
-        alignItems: 'center',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
+        alignItems: 'start',  //alineacion de intems start(izquierda), center, end(derecha) Eje x
         justifyContent: 'center', //Eje y
         borderRadius:5,
         marginBottom:8, //espacio entre cajas
