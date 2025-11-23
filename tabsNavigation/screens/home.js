@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.iconRow}>
