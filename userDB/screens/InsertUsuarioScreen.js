@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList,StyleSheet, Alert,ActivityIndicator,Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList,StyleSheet, Alert,ActivityIndicator,Platform, Modal } from 'react-native';
 import { UsuarioController } from '../controllers/UsuarioController';
 
 
@@ -9,6 +9,11 @@ export default function InsertUsuarioScreen() {
   const [nombre, setNombre] = useState('');
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [usuarioEditando, setUsuarioEditando] = useState(null);
+  const [nombreEditando, setNombreEditando] = useState('');
+  const [modalConfirmacionVisible, setModalConfirmacionVisible] = useState(false);
+  const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
   const controller = useRef(new UsuarioController()).current;
 
   // SELECT - Cargar usuarios desde la BD
@@ -50,15 +55,72 @@ useEffect(() => {
       try{
         setGuardando(true);
         const usuarioCreado = await controller.crearUsuario(nombre);
-        Alert.alert('Usuario Creado', `"${usuarioCreado.nombre}" guardando con ID: ${usuarioCreado.id}`);
+        Alert.alert('Usuario Creado', `"${usuarioCreado.nombre}" guardado con ID: ${usuarioCreado.id}`);
         setNombre('');
       }
       catch(error){
-        Alert.alert('Error', error.mesage);
+        Alert.alert('Error', error.message);
       }
       finally{
         setGuardando(false);
       }
+    };
+
+    // UPDATE - Abrir modal para editar usuario
+    const handleEditarPress = (usuario) => {
+      setUsuarioEditando(usuario);
+      setNombreEditando(usuario.nombre);
+      setModalVisible(true);
+    };
+
+    // UPDATE - Guardar cambios del usuario
+    const handleGuardarEdicion = async () => {
+      if (!nombreEditando.trim()) {
+        Alert.alert('Error', 'El nombre no puede estar vacío');
+        return;
+      }
+
+      try {
+        setGuardando(true);
+        const usuarioActualizado = await controller.actualizarUsuario(usuarioEditando.id, nombreEditando);
+        Alert.alert('Éxito', `"${usuarioActualizado.nombre}" actualizado correctamente`);
+        setModalVisible(false);
+        setUsuarioEditando(null);
+        setNombreEditando('');
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      } finally {
+        setGuardando(false);
+      }
+    };
+
+    // DELETE - Eliminar usuario
+    const handleEliminar = (usuario) => {
+      setUsuarioAEliminar(usuario);
+      setModalConfirmacionVisible(true);
+    };
+
+    // DELETE - Confirmar eliminación
+    const handleConfirmarEliminar = async () => {
+      if (!usuarioAEliminar) return;
+
+      try {
+        setGuardando(true);
+        await controller.eliminarUsuario(usuarioAEliminar.id);
+        Alert.alert('Éxito', `"${usuarioAEliminar.nombre}" eliminado correctamente`);
+        setModalConfirmacionVisible(false);
+        setUsuarioAEliminar(null);
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      } finally {
+        setGuardando(false);
+      }
+    };
+
+    // DELETE - Cancelar eliminación
+    const handleCancelarEliminar = () => {
+      setModalConfirmacionVisible(false);
+      setUsuarioAEliminar(null);
     };
 
     // Renderizar cada usuario
@@ -83,6 +145,24 @@ useEffect(() => {
                 </Text>
             </View>
 
+            <View style={styles.actionButtons}>
+              <TouchableOpacity
+                style={[styles.actionBtn, styles.editBtn]}
+                onPress={() => handleEditarPress(item)}
+                disabled={guardando}
+              >
+                <Text style={styles.actionBtnText}>Editar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.actionBtn, styles.deleteBtn]}
+                onPress={() => handleEliminar(item)}
+                disabled={guardando}
+              >
+                <Text style={styles.actionBtnText}>Eliminar</Text>
+              </TouchableOpacity>
+            </View>
+
         </View>
     );
 
@@ -91,9 +171,89 @@ useEffect(() => {
     
     <View style={styles.container}>
 
+      {/* Modal para editar usuario */}
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Editar Usuario</Text>
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre del usuario"
+              value={nombreEditando}
+              onChangeText={setNombreEditando}
+              editable={!guardando}
+            />
+
+            <View style={styles.modalButtonsContainer}>
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.modalCancelBtn]}
+                onPress={() => setModalVisible(false)}
+                disabled={guardando}
+              >
+                <Text style={styles.modalBtnText}>Cancelar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.modalSaveBtn, guardando && styles.buttonDisabled]}
+                onPress={handleGuardarEdicion}
+                disabled={guardando}
+              >
+                <Text style={styles.modalBtnText}>
+                  {guardando ? 'Guardando...' : 'Guardar'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal para confirmar eliminación */}
+      <Modal
+        visible={modalConfirmacionVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCancelarEliminar}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Confirmar Eliminación</Text>
+            
+            <Text style={styles.modalMessage}>
+              {usuarioAEliminar && `¿Estás seguro de que deseas eliminar a "${usuarioAEliminar.nombre}"? Esta acción no se puede deshacer.`}
+            </Text>
+
+            <View style={styles.modalButtonsContainer}>
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.modalCancelBtn]}
+                onPress={handleCancelarEliminar}
+                disabled={guardando}
+              >
+                <Text style={styles.modalBtnText}>Cancelar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.modalDeleteBtn, guardando && styles.buttonDisabled]}
+                onPress={handleConfirmarEliminar}
+                disabled={guardando}
+              >
+                <Text style={styles.modalBtnText}>
+                  {guardando ? 'Eliminando...' : 'Eliminar'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       {/* Zona del encabezado */}
 
-      <Text style={styles.title}> INSERT & SELECT</Text>
+      <Text style={styles.title}> CRUD Usuario</Text>
       <Text style={styles.subtitle}>
         {Platform.OS === 'web' ? ' WEB (LocalStorage)' : ` ${Platform.OS.toUpperCase()} (SQLite)`}
       </Text>
@@ -269,11 +429,12 @@ const styles = StyleSheet.create({
   userItem: {
     flexDirection: 'row',
     backgroundColor: '#f9f9f9',
-    padding: 15,
+    padding: 12,
     borderRadius: 8,
     marginBottom: 10,
     borderLeftWidth: 4,
     borderLeftColor: '#007AFF',
+    alignItems: 'center',
   },
   userNumber: {
     width: 35,
@@ -306,6 +467,86 @@ const styles = StyleSheet.create({
   userDate: {
     fontSize: 12,
     color: '#666',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  actionBtn: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 70,
+  },
+  editBtn: {
+    backgroundColor: '#FFA500',
+  },
+  deleteBtn: {
+    backgroundColor: '#FF3B30',
+  },
+  actionBtnText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    width: '80%',
+    maxWidth: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  modalButtonsContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 20,
+  },
+  modalBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalCancelBtn: {
+    backgroundColor: '#e0e0e0',
+  },
+  modalSaveBtn: {
+    backgroundColor: '#007AFF',
+  },
+  modalBtnText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  modalMessage: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  modalDeleteBtn: {
+    backgroundColor: '#FF3B30',
   },
   emptyContainer: {
     alignItems: 'center',
